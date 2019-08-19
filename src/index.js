@@ -5,6 +5,7 @@ import { ApolloProvider, } from 'react-apollo'
 import ApolloClient from 'apollo-boost'
 import Currency from './components/Currency'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import './css/index.css'
 
 const cache = new InMemoryCache()
 

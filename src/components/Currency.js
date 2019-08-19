@@ -1,7 +1,7 @@
 import { h } from 'preact'
 import { useEffect } from 'preact/hooks'
-// import React, { useEffect } from 'react'
 import { useQuery } from '@apollo/react-hooks'
+import { withApollo } from 'react-apollo'
 import gql from 'graphql-tag'
 
 const query = gql`
@@ -14,8 +14,13 @@ const query = gql`
     }
 `
 
-export default function Currency() {
-    const { loading, error, data } = useQuery(query, { variables: { currency: "usd" } })
+function Currency() {
+    const { loading, error, data, client } = useQuery(query, { variables: { currency: "usd" } })
+
+    useEffect(() => {
+        console.log(data)
+        console.log(client)
+    }, [data])
 
     return (
         <div>
@@ -26,9 +31,11 @@ export default function Currency() {
 
 
 const CurrencyView = ({ currency, name, rate }) => (
-    <div style={{ borderBottomWidth: 1, borderBottomColor: "#888", borderBottomStyle: 'solid' }} >
+    <div className="currency-view"  >
         <p>Name: {name}</p>
         <p>Currency: {currency}</p>
         <p>rate: {rate}</p>
     </div>
 )
+
+export default withApollo(Currency)
